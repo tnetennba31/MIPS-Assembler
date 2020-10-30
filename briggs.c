@@ -70,7 +70,6 @@ void parse_string(const char *str, parsed_t *result)
 
 
     while ((str[i] != 0) && (state >= 0)) {
-
         char ch = str[i];
         switch(state) {
             case 0:
@@ -97,7 +96,6 @@ void parse_string(const char *str, parsed_t *result)
                 }
                 break;
             }
-
             i++;
         }
 
@@ -109,7 +107,4 @@ void parse_string(const char *str, parsed_t *result)
         }
     }
 
-    int main(int argc, char **argv)
-    {
-    }
 }
