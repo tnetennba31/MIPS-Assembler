@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdint.h>
 
+#include "validateInstruction.h"
+
 #define NUM_INSTR ( sizeof(instrs) / sizeof(instr_t))
 
 typedef enum {
@@ -30,18 +32,6 @@ typedef struct {
     char *shamt;
 } parsed_t;
 
-uint32_t format_rtype(parsed_t *parsed)
-{
-    int code = lookup_opcode(parsed->opcode);
-    int rd = decode_register(parsed->regs[0]);
-    int rs = decode_register(parsed->regs[1]);
-    int rt = decode_register(parsed->regs[2]);
-    int shamt = strtol(parsed->shamt, NULL, 0);
-    int func = lookup_func(parsed->opcode);
-
-    return code << 26 | rs << 21 | rt << 16 | rd << 11 | shamt << 5 | func;
-}
-
 int find_opcode(const char *str, struct instr_t *instr)
 {
     int i;
@@ -52,12 +42,6 @@ int find_opcode(const char *str, struct instr_t *instr)
         }
     }
 }
-
-
-
-
-
-
 
 typedef struct r_type {
     unsigned int opcode = 0b000000;
