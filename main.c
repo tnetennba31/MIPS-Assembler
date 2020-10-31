@@ -8,20 +8,16 @@ int main() {
 
     char *mnemonic = parse_string(instruction); // TODO - Yong returns the mnemonic (up til first comma)
 
-    instr_t instr = validate_instruction(mnemonic);    // TODO - Nicholas returns the instruction as an instr_t struct
+    instr_t_pointer instr = validate_instruction(mnemonic);    // TODO - Nicholas returns the instruction as an instr_t struct
 
-    if (instr == null) {
+    if (strcmp(instr->mnemonic, "invalid")) {
         printf("ERROR - INVALID INSTRUCTION\n");
         goto done;
     }
 
-    typedef enum {
-        PARSE_RTYPE, PARSE_ITYPE, PARSE_JTYPE, PARSE_JRTYPE, MEMTYPE, SHIFTY
-    } instr_type_t;
-
     uint32_t formatted_instr;
     
-    switch (instr.type) {
+    switch (instr->type) {
         case PARSE_RTYPE:
             formatted_instr = format_rtype();
             break;

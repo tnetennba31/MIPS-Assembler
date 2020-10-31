@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 #define NUM_INSTR ( sizeof(instrs) / sizeof(instr_t))
 
@@ -8,17 +9,21 @@ typedef enum {
     FMT_RTYPE, FMT_ITYPE, FMT_JTYPE
 } encode_type_t;
 
-typedef struct {
+typedef enum {
+    PARSE_RTYPE, PARSE_ITYPE, PARSE_JTYPE, PARSE_JRTYPE, MEMTYPE, SHIFTY
+} instr_type_t;
+
+typedef struct instr_t {
     char *mnemonic;
     instr_type_t type;
     encode_type_t etype;
     int opcode;
     int function;
-} instr_t;
+} *instr_t_pointer;
 
 typedef struct {
     int last_state;
-    instr_t instr;
+    struct instr_t instr;
     char *opcode;
     char *regs[3];
     char *immediate;
@@ -37,7 +42,7 @@ uint32_t format_rtype(parsed_t *parsed)
     return code << 26 | rs << 21 | rt << 16 | rd << 11 | shamt << 5 | func;
 }
 
-int find_opcode(const char *str, instr_t *instr)
+int find_opcode(const char *str, struct instr_t *instr)
 {
     int i;
     for (i = 0; i < NUM_INSTR; i++) {

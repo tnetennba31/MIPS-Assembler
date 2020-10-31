@@ -1,22 +1,8 @@
-instr_t validate_instruction(char str[]);
+#include "main.h"
 
-typedef enum {
-    PARSE_RTYPE, PARSE_ITYPE, PARSE_JTYPE, PARSE_JRTYPE, MEMTYPE, SHIFTY
-} instr_type_t;
+instr_t_pointer validate_instruction(char str[]);
 
-typedef enum {
-    FMT_RTYPE, FMT_ITYPE, FMT_JTYPE
-} encode_type_t;
-
-typedef struct {
-    char *mnemonic;
-    instr_type_t type;
-    encode_type_t etype;
-    int opcode;
-    int function;
-} instr_t;
-
-instr_t instrs[] = {
+struct instr_t instrs[] = {
     {.mnemonic = "ADD", .type = PARSE_RTYPE, .etype = FMT_RTYPE, .opcode = 0, .function = 0x20},
     {.mnemonic = "ADDI", .type = PARSE_ITYPE, .etype = FMT_ITYPE, .opcode = 0x08},
     {.mnemonic = "ADDIU", .type = PARSE_ITYPE, .etype = FMT_ITYPE, .opcode = 0x09},

@@ -1,9 +1,9 @@
-#include <stdio.h>
 #include <string.h>
 #include "validateInstruction.h"
 
-instr_t validate_instruction(char str[]) {
-    instr_t result;
+instr_t_pointer validate_instruction(char str[]) {
+    struct instr_t result;
+    instr_t_pointer ptr = &result;
     int len = sizeof(instrs)/sizeof(instrs[0]);
     
     for (int i = 0; i < len; i++) {
@@ -20,5 +20,5 @@ instr_t validate_instruction(char str[]) {
         }
     }
     
-    return result;
+    return ptr;
 }
