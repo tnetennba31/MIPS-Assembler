@@ -2,12 +2,30 @@
 
 uint32_t format_rtype(parsed_t *parsed)
 {
-    int code = lookup_opcode(parsed->opcode);
-    int rd = decode_register(parsed->regs[0]);
-    int rs = decode_register(parsed->regs[1]);
-    int rt = decode_register(parsed->regs[2]);
-    int shamt = strtol(parsed->shamt, NULL, 0);
-    int func = lookup_func(parsed->opcode);
+    int code = parsed->opcode;
+    int rd = parsed->regs[0];
+    int rs = parsed->regs[1];
+    int rt = parsed->regs[2];
+    int shamt = parsed->shamt;
+    int func = parsed->opcode;
 
     return code << 26 | rs << 21 | rt << 16 | rd << 11 | shamt << 5 | func;
+}
+
+uint32_t format_itype(parsed_t *parsed)
+{
+    int code = parsed->opcode;
+    int rs = parsed->regs[0];
+    int rt = parsed->regs[1];
+    int imm = parsed->immediate;
+
+    return code << 26 | rs << 21 | rt << 16 | imm;
+}
+
+uint32_t format_jtype(parsed_t *parsed)
+{
+    int code = parsed->opcode;
+    int addr = parsed->immediate;
+
+    return code << 26 | addr;
 }

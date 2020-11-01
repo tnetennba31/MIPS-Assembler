@@ -2,44 +2,30 @@
 
 int main() {
 
-    // read in a line of stuff -> input
+    char* input;
+    fgets(input, 160, stdin);
 
     char *instruction = normalize(input);
 
-    char *mnemonic = parse_string(instruction); // TODO - Yong returns the mnemonic (up til first comma)
+    char *mnemonic = strtok(instruction, ",");
 
-    instr_t_pointer instr = validate_instruction(mnemonic);    // TODO - Nicholas returns the instruction as an instr_t struct
+    parsed_t *parsed_ptr = parse_string(instruction);
 
-    if (strcmp(instr->mnemonic, "invalid")) {
-        printf("ERROR - INVALID INSTRUCTION\n");
+    if (strcmp(parsed_ptr->mnemonic, "invalid")) {
         goto done;
     }
 
     uint32_t formatted_instr;
     
-    switch (instr->type) {
-        case PARSE_RTYPE:
-            formatted_instr = format_rtype();
+    switch (parsed_ptr->etype) {
+        case FMT_RTYPE:
+            formatted_instr = format_rtype(parsed_ptr);
             break;
-        case PARSE_ITYPE:
-            formatted_instr = format_itype();
+        case FMT_ITYPE:
+            formatted_instr = format_itype(parsed_ptr);
             break;
-        case PARSE_JTYPE:
-            formatted_instr = format_jtype();
-            break;
-        case PARSE_JRTYPE:
-            formatted_instr = format_jrtype();
-            break;
-        case MEMTYPE:
-            formatted_instr = format_memtype();
-            break;
-        case SHIFTY:
-            formatted_instr = format_shifty();
-    }
-
-    if (formatted_instr == null) {
-        printf("ERROR - INVALID REGISTER\n");
-        goto done;
+        case FMT_JTYPE:
+            formatted_instr = format_jtype(parsed_ptr);
     }
 
     printf("%d", converttohex(formatted_instr));
