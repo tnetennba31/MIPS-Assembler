@@ -1,12 +1,9 @@
 #include "converttobinthenhex.h"
 
-char hexreturn(uint32_t num)
+void hexreturn(uint32_t num, char *string)
 {
 //printf("%" PRIu32 "\n",num);
 
-int rem=1;
-long binary=0;
-int temp=1;
 int binaryarray[32];
 int i=0;
 
@@ -41,11 +38,6 @@ for (int i=0; i< 32; i++)
 
 
 char hexstring[8];
-
-int newstart;
-int temp4=0;
-char hex;
-
 
 int check1=0;
 int check2=1;
@@ -137,10 +129,8 @@ for (int f=0; f< 32; f++)
     //printf("%s", hexstring[f]);
     //printf("%d", binaryarray[f]);
 }
-char string[100];
 strcpy(string, hexstring);
 //printf("%s", xstr);
 
-return string;
 
 }

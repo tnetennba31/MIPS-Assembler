@@ -6,7 +6,7 @@
 #include "validateInstruction.h"
 #include <stdbool.h>
 
-parsed_t *parse_string(char* str);
+void parse_string(parsed_t *p, char* str);
 
 bool parseR(char *str, parsed_t *result);
 bool parseI(char *str, parsed_t *result);

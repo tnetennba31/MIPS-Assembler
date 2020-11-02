@@ -1,8 +1,7 @@
 #include "parseString.h"
 
-parsed_t *parse_string(char *str)
+void parse_string(parsed_t *p, char *str)
 {
-	parsed_t result;
 	
 	char *mnemonic = strtok(str, ",");
 	char *remainder = strtok(NULL, "\0");
@@ -13,39 +12,38 @@ parsed_t *parse_string(char *str)
         printf("ERROR - INVALID INSTRUCTION\n");
     }
 
-	result.mnemonic = instr->mnemonic;
-	result.etype = instr->etype;
-	result.opcode = instr->opcode;
-	result.func = instr->function;
+	p->mnemonic = instr->mnemonic;
+	p->etype = instr->etype;
+	p->opcode = instr->opcode;
+	p->func = instr->function;
 
 	bool failed = false;
 
 	switch (instr->type) {
         case PARSE_RTYPE:
-            failed = parseR(remainder, &result);
+            failed = parseR(remainder, p);
             break;
         case PARSE_ITYPE:
-            failed = parseI(remainder, &result);
-            break;
+            failed = parseI(remainder, p);
+ 	    break;
         case PARSE_JTYPE:
-            failed = parseJ(remainder, &result);
+            failed = parseJ(remainder, p);
             break;
         case PARSE_JRTYPE:
-            failed = parseJR(remainder, &result);
+            failed = parseJR(remainder, p);
             break;
         case MEMTYPE:
-            failed = parseMem(remainder, &result);
+            failed = parseMem(remainder, p);
             break;
         case SHIFTY:
-            failed = parseShifty(remainder, &result);
+            failed = parseShifty(remainder, p);
     }
 
 	if (failed) {
         printf("ERROR - INVALID REGISTER\n");
-		result.mnemonic = "invalid";
+		p->mnemonic = "invalid";
     }
 
-	return &result;
 }
 
 bool parseR(char *str, parsed_t *result) {

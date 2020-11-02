@@ -7,6 +7,6 @@
 #include <stdint.h>
 #include <inttypes.h>
 
-char hexreturn(uint32_t num);
+void hexreturn(uint32_t num, char *string);
 
 #endif

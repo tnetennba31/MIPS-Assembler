@@ -2,14 +2,14 @@
 
 int main() {
 
-    char* input;
+    char input[160];
     fgets(input, 160, stdin);
 
     char *instruction = normalize(input);
 
-    char *mnemonic = strtok(instruction, ",");
-
-    parsed_t *parsed_ptr = parse_string(instruction);
+    parsed_t *parsed_ptr = malloc(sizeof(parsed_t));
+    
+    parse_string(parsed_ptr, instruction);
 
     if (strcmp(parsed_ptr->mnemonic, "invalid")) {
         goto done;
@@ -28,8 +28,12 @@ int main() {
             formatted_instr = format_jtype(parsed_ptr);
     }
 
-    printf("%d", hexreturn(formatted_instr));
+    char *string = NULL;
+
+    hexreturn(formatted_instr, string);
+    printf("%s\n", string);
 
 done:
+    free(parsed_ptr);
     return 0;
 }
