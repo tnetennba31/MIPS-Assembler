@@ -3,6 +3,6 @@
 
 #include "project.h"
 
-instr_t_pointer validate_instruction(char str[]);
+void validate_instruction(char str[], instr_t_pointer result);
 
 #endif

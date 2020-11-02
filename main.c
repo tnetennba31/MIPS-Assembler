@@ -2,10 +2,10 @@
 
 int main() {
 
-    char input[160];
-    fgets(input, 160, stdin);
+   // char input[160];
+    //fgets(input, 160, stdin);
 
-    char *instruction = normalize(input);
+    char *instruction = normalize("        add   $t0,    $t5,    $a1");
 
     parsed_t *parsed_ptr = malloc(sizeof(parsed_t));
     

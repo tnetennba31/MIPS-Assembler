@@ -6,7 +6,9 @@ void parse_string(parsed_t *p, char *str)
 	char *mnemonic = strtok(str, ",");
 	char *remainder = strtok(NULL, "\0");
 
-	instr_t_pointer instr = validate_instruction(mnemonic);
+	instr_t_pointer instr = (instr_t_pointer) malloc(sizeof(struct instr_t));
+
+	validate_instruction(mnemonic, instr);
 
 	if (strcmp(instr->mnemonic, "invalid")) {
         printf("ERROR - INVALID INSTRUCTION\n");
@@ -16,6 +18,8 @@ void parse_string(parsed_t *p, char *str)
 	p->etype = instr->etype;
 	p->opcode = instr->opcode;
 	p->func = instr->function;
+
+	free(instr);
 
 	bool failed = false;
 
