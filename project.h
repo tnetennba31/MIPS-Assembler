@@ -1,3 +1,6 @@
+#ifndef _PROJECT_H
+#define _PROJECT_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,3 +34,5 @@ typedef struct {
     int shamt;
 	int func;
 } parsed_t;
+
+#endif
