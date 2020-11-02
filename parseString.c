@@ -1,13 +1,13 @@
 #include <stdbool.h>
 #include "parseString.h"
 
-parsed_t *parse_string(const char *str)
+parsed_t *parse_string(char *str)
 {
 	parsed_t result;
+	
+	char *mnemonic = strtok(str, ",");
+	char *remainder = strtok(NULL, "\0");
 
-	char mnemonic;
-	char *remainder;
-	strcpy(mnemonic, strtok_r(str, ",", &remainder));
 	instr_t_pointer instr = validate_instruction(mnemonic);
 
 	if (strcmp(instr->mnemonic, "invalid")) {
@@ -50,10 +50,9 @@ parsed_t *parse_string(const char *str)
 }
 
 bool parseR(char *str, parsed_t *result) {
-	char *remainder;
-	result->regs[0] = decode_register(strtok_r(str, ',', &remainder));
-	result->regs[1] = decode_register(strtok_r(NULL, ',', &remainder));
-	result->regs[2] = decode_register(strtok_r(NULL, ',', &remainder));
+	result->regs[0] = decode_register(strtok(str, ","));
+	result->regs[1] = decode_register(strtok(NULL, ","));
+	result->regs[2] = decode_register(strtok(NULL, ","));
 
 	result->shamt = 0;
 
@@ -62,23 +61,22 @@ bool parseR(char *str, parsed_t *result) {
 }
 
 bool parseI(char *str, parsed_t *result) {
-	char *remainder;
-	result->regs[0] = decode_register(strtok_r(str, ',', &remainder));
-	result->regs[1] = decode_register(strtok_r(NULL, ',', &remainder));
-	result->immediate = strtoi(strtok_r(NULL, ',', &remainder));
+	result->regs[0] = decode_register(strtok(str, ","));
+	result->regs[1] = decode_register(strtok(NULL, ","));
+	result->immediate = atoi(strtok(NULL, ","));
 
 	if(result->regs[0] == -1 || result->regs[1] == -1) return true;
 	else return false;
 }
 
 bool parseJ(char *str, parsed_t *result) {
-	result->immediate = strtoi(str);
+	result->immediate = atoi(str);
 
 	return false;
 }
 
 bool parseJR(char *str, parsed_t *result) {
-	result->regs[0] = decode_register(strtok(str, ','));
+	result->regs[0] = decode_register(strtok(str, ","));
 
 	result->shamt = 0;
 
@@ -87,20 +85,18 @@ bool parseJR(char *str, parsed_t *result) {
 }
 
 bool parseMem(char *str, parsed_t *result) {
-	char *remainder;
-	result->regs[0] = decode_register(strtok_r(str, ',', &remainder));
-	result->immediate = strtoi(strtok_r(NULL, ',', &remainder));
-	result->regs[1] = decode_register(strtok_r(NULL, ',', &remainder));
+	result->regs[0] = decode_register(strtok(str, ","));
+	result->immediate = atoi(strtok(NULL, ","));
+	result->regs[1] = decode_register(strtok(NULL, ","));
 
 	if(result->regs[0] == -1 || result->regs[1] == -1) return true;
 	else return false;
 }
 
 bool parseShifty(char *str, parsed_t *result) {
-	char *remainder;
-	result->regs[0] = decode_register(strtok_r(str, ',', &remainder));
-	result->regs[1] = decode_register(strtok_r(NULL, ',', &remainder));
-	result->shamt = strtoi(strtok_r(NULL, ',', &remainder));
+	result->regs[0] = decode_register(strtok(str, ","));
+	result->regs[1] = decode_register(strtok(NULL, ","));
+	result->shamt = atoi(strtok(NULL, ","));
 
 	if(result->regs[0] == -1 || result->regs[1] == -1) return true;
 	else return false;

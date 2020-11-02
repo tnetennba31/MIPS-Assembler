@@ -28,7 +28,7 @@ int main() {
             formatted_instr = format_jtype(parsed_ptr);
     }
 
-    printf("%d", converttohex(formatted_instr));
+    printf("%d", hexreturn(formatted_instr));
 
 done:
     return 0;
