@@ -1,3 +1,6 @@
+#ifndef _VALIDATEINSTRUCTION_H
+#define _VALIDATEINSTRUCTION_H
+
 #include "project.h"
 
 instr_t_pointer validate_instruction(char str[]);
@@ -35,3 +38,5 @@ struct instr_t instrs[] = {
     {.mnemonic = "SUB", .type = PARSE_RTYPE, .etype = FMT_RTYPE, .opcode = 0, .function = 0x22},
     {.mnemonic = "SUBU", .type = PARSE_RTYPE, .etype = FMT_RTYPE, .opcode = 0, .function = 0x23}
 };
+
+#endif

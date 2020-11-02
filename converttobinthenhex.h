@@ -1,3 +1,6 @@
+#ifndef _CONVERTTOBINTHENHEX_H
+#define _CONVERTTOBINTHENHEX_H
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -5,3 +8,5 @@
 #include <inttypes.h>
 
 char hexreturn(uint32_t num);
+
+#endif

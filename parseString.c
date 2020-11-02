@@ -1,4 +1,3 @@
-#include <stdbool.h>
 #include "parseString.h"
 
 parsed_t *parse_string(char *str)
