@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
-#include "parseString.h"
+#include <strings.h>
 
 #define NUM_INSTR ( sizeof(instrs) / sizeof(struct instr_t))
 

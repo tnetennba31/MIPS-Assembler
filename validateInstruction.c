@@ -1,4 +1,3 @@
-#include <string.h>
 #include "validateInstruction.h"
 
 instr_t_pointer validate_instruction(char str[]) {
