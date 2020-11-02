@@ -52,10 +52,9 @@ parsed_t *parse_string(const char *str)
 
 bool parseR(char *str, parsed_t *result) {
 	char *remainder;
-	char *remainder2;
 	result->regs[0] = decode_register(strtok_r(str, ',', &remainder));
-	result->regs[1] = decode_register(strtok_r(remainder, ',', &remainder2));
-	result->regs[2] = decode_register(strtok(remainder2, ','));
+	result->regs[1] = decode_register(strtok_r(NULL, ',', &remainder));
+	result->regs[2] = decode_register(strtok_r(NULL, ',', &remainder));
 
 	result->shamt = 0;
 
@@ -65,10 +64,9 @@ bool parseR(char *str, parsed_t *result) {
 
 bool parseI(char *str, parsed_t *result) {
 	char *remainder;
-	char *remainder2;
 	result->regs[0] = decode_register(strtok_r(str, ',', &remainder));
-	result->regs[1] = decode_register(strtok_r(remainder, ',', &remainder2));
-	result->immediate = strtoi(remainder2);
+	result->regs[1] = decode_register(strtok_r(NULL, ',', &remainder));
+	result->immediate = strtoi(strtok_r(NULL, ',', &remainder));
 
 	if(result->regs[0] == -1 || result->regs[1] == -1) return true;
 	else return false;
@@ -91,10 +89,9 @@ bool parseJR(char *str, parsed_t *result) {
 
 bool parseMem(char *str, parsed_t *result) {
 	char *remainder;
-	char *remainder2;
 	result->regs[0] = decode_register(strtok_r(str, ',', &remainder));
-	result->immediate = strtoi(strtok_r(remainder, '(', &remainder2));
-	result->regs[1] = decode_register(strtok(remainder2, ')'));
+	result->immediate = strtoi(strtok_r(NULL, ',', &remainder));
+	result->regs[1] = decode_register(strtok_r(NULL, ',', &remainder));
 
 	if(result->regs[0] == -1 || result->regs[1] == -1) return true;
 	else return false;
@@ -102,10 +99,9 @@ bool parseMem(char *str, parsed_t *result) {
 
 bool parseShifty(char *str, parsed_t *result) {
 	char *remainder;
-	char *remainder2;
 	result->regs[0] = decode_register(strtok_r(str, ',', &remainder));
-	result->regs[1] = decode_register(strtok_r(remainder, ',', &remainder2));
-	result->shamt = strtoi(remainder2);
+	result->regs[1] = decode_register(strtok_r(NULL, ',', &remainder));
+	result->shamt = strtoi(strtok_r(NULL, ',', &remainder));
 
 	if(result->regs[0] == -1 || result->regs[1] == -1) return true;
 	else return false;
