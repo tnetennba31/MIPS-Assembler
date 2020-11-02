@@ -139,11 +139,8 @@ for (int f=0; f< 32; f++)
 }
 char string[100];
 strcpy(string, hexstring);
-char xstr[100];
-strcpy(xstr, "0x");
-strcat(xstr, hexstring);
 //printf("%s", xstr);
 
-return xstr;
+return string;
 
 }
