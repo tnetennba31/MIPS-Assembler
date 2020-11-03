@@ -1,19 +1,16 @@
 #include "parseString.h"
-#include <math.h>
-
-int get_num(char *number);
 
 void parse_string(parsed_t *p, char *str)
 {
 	
 	char *mnemonic = strtok(str, ",");
-	char *remainder = strtok(NULL, "\n");
+	char *remainder = strtok(NULL, "\0");
 
-	instr_t_pointer instr = malloc(sizeof(struct instr_t));
+	instr_t_pointer instr = (instr_t_pointer) malloc(sizeof(struct instr_t));
 
 	validate_instruction(mnemonic, instr);
 
-	if (strcmp(instr->mnemonic, "invalid") == 0) {
+	if (strcmp(instr->mnemonic, "invalid")) {
         printf("ERROR - INVALID INSTRUCTION\n");
     }
 
@@ -22,7 +19,7 @@ void parse_string(parsed_t *p, char *str)
 	p->opcode = instr->opcode;
 	p->func = instr->function;
 
-	// printf("P is %d instr is %d ", p->func, instr->function);
+	free(instr);
 
 	bool failed = false;
 
@@ -46,8 +43,6 @@ void parse_string(parsed_t *p, char *str)
             failed = parseShifty(remainder, p);
     }
 
-	free(instr);
-
 	if (failed) {
         printf("ERROR - INVALID REGISTER\n");
 		p->mnemonic = "invalid";
@@ -69,19 +64,14 @@ bool parseR(char *str, parsed_t *result) {
 bool parseI(char *str, parsed_t *result) {
 	result->regs[0] = decode_register(strtok(str, ","));
 	result->regs[1] = decode_register(strtok(NULL, ","));
-	char *ptr = strtok(NULL, ",");
-	char *ptr2 = malloc(sizeof(char *));
-	strcpy(ptr2, ptr);
-	result->immediate = get_num(ptr2);
-	printf("atoi %d ", result->immediate);
+	result->immediate = atoi(strtok(NULL, ","));
+
 	if(result->regs[0] == -1 || result->regs[1] == -1) return true;
 	else return false;
 }
 
-bool parseJ(char *str, parsed_t *result) {	
-	char *ptr = malloc(sizeof(str));
-	strcpy(ptr, str);
-	result->immediate = get_num(ptr);
+bool parseJ(char *str, parsed_t *result) {
+	result->immediate = atoi(str);
 
 	return false;
 }
@@ -111,21 +101,4 @@ bool parseShifty(char *str, parsed_t *result) {
 
 	if(result->regs[0] == -1 || result->regs[1] == -1) return true;
 	else return false;
-}
-
-
-int get_num(char *number)
-{
-    int len = strlen(number);
-    int sum = 0;
-    int dig;
-
-
-    for (int i = len - 1; i >= 0; i--) {
-	dig = number[i] - 48;
-	printf("char is %c int is %d ", number[i], dig);
-        sum = sum + dig * pow(10, (len - i - 1));
-	}
-
-	return sum;
 }

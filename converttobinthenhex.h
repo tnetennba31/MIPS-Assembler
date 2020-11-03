@@ -1,0 +1,12 @@
+#ifndef _CONVERTTOBINTHENHEX_H
+#define _CONVERTTOBINTHENHEX_H
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdint.h>
+#include <inttypes.h>
+
+void hexreturn(uint32_t num, char *string);
+
+#endif

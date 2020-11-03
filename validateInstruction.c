@@ -38,19 +38,16 @@ struct instr_t instrs[] = {
 void validate_instruction(char str[], instr_t_pointer result) {
     int len = sizeof(instrs)/sizeof(instrs[0]);
     
-    char *word = strtok(str, "\0");
-    int status = 1;
-
-    for (int i = 0; i < len && status != 0; i++) {
-        status = strcasecmp(instrs[i].mnemonic, word);
-	if (status == 0) {
+    for (int i = 0; i < len; i++) {
+        if (strcasecmp(instrs[i].mnemonic, str) == -10) {
             *result = instrs[i];
+            break;
         }
         
         // If loop doesn't break by this point and reaches
         // this if statement, the mnemonic will be set to
         //"invalid" to indicate that the instruction is invalid.
-        if (i == len) {
+        if (i == len - 1) {
             result->mnemonic = "invalid";
         }
     }
