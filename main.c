@@ -2,16 +2,18 @@
 
 int main() {
 
-   // char input[160];
-    //fgets(input, 160, stdin);
+    char in[160], *input;
+    while (fgets(in, 160, stdin) != NULL) {
 
-    char *instruction = normalize("        add   $t0,    $t5,    $a1");
+    input = strtok(in, "\n");
+
+    char *instruction = normalize(input);
 
     parsed_t *parsed_ptr = malloc(sizeof(parsed_t));
     
     parse_string(parsed_ptr, instruction);
 
-    if (strcmp(parsed_ptr->mnemonic, "invalid")) {
+    if (strcmp(parsed_ptr->mnemonic, "invalid") == 0) {
         goto done;
     }
 
@@ -28,12 +30,10 @@ int main() {
             formatted_instr = format_jtype(parsed_ptr);
     }
 
-    char *string = NULL;
-
-    hexreturn(formatted_instr, string);
-    printf("%s\n", string);
+    printf("%.8x\n", formatted_instr);
 
 done:
     free(parsed_ptr);
+    }
     return 0;
 }

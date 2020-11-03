@@ -28,11 +28,11 @@ typedef struct instr_t {
 typedef struct {
     char *mnemonic;
     encode_type_t etype;
-	int opcode;
+    int opcode;
     int regs[3];
     int immediate;
     int shamt;
-	int func;
+    int func;
 } parsed_t;
 
 #endif

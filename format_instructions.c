@@ -7,7 +7,7 @@ uint32_t format_rtype(parsed_t *parsed)
     int rs = parsed->regs[1];
     int rt = parsed->regs[2];
     int shamt = parsed->shamt;
-    int func = parsed->opcode;
+    int func = parsed->func;
 
     return code << 26 | rs << 21 | rt << 16 | rd << 11 | shamt << 5 | func;
 }
@@ -15,8 +15,8 @@ uint32_t format_rtype(parsed_t *parsed)
 uint32_t format_itype(parsed_t *parsed)
 {
     int code = parsed->opcode;
-    int rs = parsed->regs[0];
-    int rt = parsed->regs[1];
+    int rt = parsed->regs[0];
+    int rs = parsed->regs[1];
     int imm = parsed->immediate;
 
     return code << 26 | rs << 21 | rt << 16 | imm;
