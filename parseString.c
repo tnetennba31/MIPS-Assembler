@@ -81,7 +81,7 @@ bool parseJ(char *str, parsed_t *result) {
 	char *ptr = malloc(sizeof(char *));
 	strcpy(ptr, str);
 	result->immediate = get_num(ptr);
-
+	printf("return is %d %x\n", result->immediate, result->immediate);
 	return false;
 }
 
@@ -115,25 +115,38 @@ bool parseShifty(char *str, parsed_t *result) {
 
 int get_num(char *number)
 {
-    int len = strlen(number);
     int sum = 0;
-    int dig, base;
+    int dig, base, offset;
 
     if (strncmp(number, "0x", 2) == 0) {
-	// need a way to make number point to the char following x
-	printf("string is now %s ", number);
+	char *cpy = malloc(sizeof(char *));
+	strcpy(cpy, number);
+	strtok(cpy, "x");
+	number = strtok(NULL, "x");
 	base = 16;
     }
     else {
 	base = 10;
     }
 
+    int len = strlen(number);
 
     for (int i = len - 1; i >= 0; i--) {
-	dig = number[i] - 48;
-	printf("char is %c int is %d ", number[i], dig);
+	if (number[i] <= 102 && number[i] >= 97) {	// if current char is A_F
+	   offset = 87; }
+	else if (number[i] <= 70 && number[i] >= 65) {  // if current char is a-f
+	    offset = 55; }
+	else if (number[i] <= 57 && number[i] >= 48) {  // if current char is 0-9
+	    offset = 48; }
+	else return -1;
+
+	dig = number[i] - offset;
+	printf("char is %c int is %d\n", number[i], dig);
         sum = sum + dig * pow(base, (len - i - 1));
 	}
 
-	return sum;
+	int max_bits = (int) (pow(2,26) - 1);
+
+	printf("max is %d bin is %x\n", max_bits, max_bits);
+	return sum & max_bits;			// return 26 bits
 }
