@@ -22,7 +22,7 @@ void parse_string(parsed_t *p, char *str)
 	p->opcode = instr->opcode;
 	p->func = instr->function;
 
-	 printf("P is %d instr is %d ", p->func, instr->function);
+	//printf("P is %d instr is %d ", p->func, instr->function);
 
 	bool failed = false;
 
