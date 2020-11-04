@@ -22,7 +22,7 @@ void parse_string(parsed_t *p, char *str)
 	p->opcode = instr->opcode;
 	p->func = instr->function;
 
-	// printf("P is %d instr is %d ", p->func, instr->function);
+	 printf("P is %d instr is %d ", p->func, instr->function);
 
 	bool failed = false;
 
@@ -73,6 +73,7 @@ bool parseI(char *str, parsed_t *result) {
 	char *ptr2 = malloc(sizeof(char *));
 	strcpy(ptr2, ptr);
 	result->immediate = get_num(ptr2);
+	printf("return is %d %x\n", result->immediate, result->immediate);
 	if(result->regs[0] == -1 || result->regs[1] == -1) return true;
 	else return false;
 }
