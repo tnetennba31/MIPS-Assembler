@@ -141,12 +141,12 @@ int get_num(char *number)
 	else return -1;
 
 	dig = number[i] - offset;
-	printf("char is %c int is %d\n", number[i], dig);
+	//printf("char is %c int is %d\n", number[i], dig);
         sum = sum + dig * pow(base, (len - i - 1));
 	}
 
 	int max_bits = (int) (pow(2,26) - 1);
 
-	printf("max is %d bin is %x\n", max_bits, max_bits);
+	//printf("max is %d bin is %x\n", max_bits, max_bits);
 	return sum & max_bits;			// return 26 bits
 }
